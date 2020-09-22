@@ -1,5 +1,5 @@
 library(dplyr)
-setwd('C:/Users/Eoin/Documents/R/Football/FactorAnalysis/FactorAnalysis/')
+
 # Import data from 19/20 season from fbref
 
 #Overall stats
