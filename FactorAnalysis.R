@@ -240,3 +240,26 @@ loadings(res,sort=TRUE)
 #Look at uniqueness
 res$uniquenesses
 
+
+#Extract factor scores 
+MidScores<-cbind.data.frame(Name = Midfielders[,1],res$scores,Position = Midfielders[,2],
+                            Age = Midfielders[,3],League = Midfielders$Comp)
+
+#Rename leagues
+MidScores$League <- factor(MidScores$League,as.character(unique(MidScores$League)),
+                           c("La Liga","Ligue 1","Premier League",
+                             "Serie A","Bundesliga"))
+
+
+#Check example of similar players to Ruben Neves
+Similarity <- 1-(rowSums(abs(sweep(MidScores[,2:6],2,unlist(MidScores[MidScores["Name"]=="Rúben Neves",2:6]))))/
+                     max(rowSums(abs(sweep(MidScores[,2:6],2,unlist(MidScores[MidScores["Name"]=="Rúben Neves",2:6]))))))
+
+
+SimilarityResult <- cbind.data.frame(Name = MidScores[,1],Similarity)
+
+#Order results
+SimilarityResult<-SimilarityResult[with(SimilarityResult, order(-Similarity)), ]
+
+#Look at most similar players
+SimilarityResult[1:10,]
